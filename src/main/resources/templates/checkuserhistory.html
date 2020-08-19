@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+    <meta charset="UTF-8">
+    <title>User's purchased history</title>
+</head>
+<body>
+<h1> Purchased History </h1>
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Date</th>
+        <th>Amount Disc</th>
+        <th>Total</th>
+        <th>Info about discs</th>
+    </tr>
+    <tr th:each="purchasedDisc:${listOfPurchaseHistory}">
+        <td th:text="${purchasedDisc.date}">Date</td>
+        <td th:text="${purchasedDisc.amountDisc}">Amount Disc</td>
+        <td th:text="${purchasedDisc.totalAmount}">Total</td>
+        <td>
+            <a th:href="@{'/disclist/'+${purchasedDisc.id}}">Info about discs</a>
+        </td>
+    </tr>
+</table>
+<br>
+<form>
+    <input type="button" value="Go back" onclick="history.back()">
+</form>
+
+</body>
+</html>

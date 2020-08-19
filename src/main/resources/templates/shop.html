@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+    <meta charset="UTF-8">
+    <title>SHOP</title>
+</head>
+<body>
+<h1> Welcome <span th:text="${currentCustomer.getFirstname()}"></span></h1>
+
+<br>
+
+<!-- input search function-->
+<!-- onkeydown="this.value = this.value.toLowerCase()
+    or
+    onkeydown="var start = this.selectionStart;var end = this.selectionEnd; this.value = this.value.toLowerCase(); this.setSelectionRange(start,end);">
+ -->
+
+<form th:action="@{/shop}" method="get">
+Type disc's name or brand
+    <input id="txtSearch" type="text" name="keyword"
+           onkeydown="var start = this.selectionStart;var end = this.selectionEnd; this.value = this.value.toLowerCase(); this.setSelectionRange(start,end);">
+    <button type="submit">Go</button>
+
+</form>
+
+<br>
+<span th:if="${currentCustomer.isPremium()}">
+    <h3> You are a premium, you will get 15% cheaper</h3>
+
+    <table border="1" cellpadding="10">
+    <tr>
+        <th>Brand</th>
+        <th>Name</th>
+        <th>Weight</th>
+        <th>Price</th>
+        <th>Add to cart</th>
+    </tr>
+    <tr th:each="disc:${listOfDiscs}">
+        <td th:text="${disc.brand}">Brand</td>
+        <td th:text="${disc.name}">Name</td>
+        <td th:text="${disc.weight}">Weight</td>
+        <td th:text="${disc.price}*0.85">Price</td>
+        <td>
+            <a th:href="@{'/addToCart/'+${disc.id}}"> + </a>
+        </td>
+
+    </tr>
+
+</table>
+
+
+</span>
+<span th:if="${!currentCustomer.isPremium()}">
+
+
+<!-- List of disc -->
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Brand</th>
+        <th>Name</th>
+        <th>Weight</th>
+        <th>Price</th>
+        <th>Add to cart</th>
+    </tr>
+    <tr th:each="disc:${listOfDiscs}">
+        <td th:text="${disc.brand}">Brand</td>
+        <td th:text="${disc.name}">Name</td>
+        <td th:text="${disc.weight}">Weight</td>
+        <td th:text="${disc.price}">Price</td>
+        <td>
+            <a th:href="@{'/addToCart/'+${disc.id}}"> + </a>
+        </td>
+
+    </tr>
+
+</table>
+</span>
+<br>
+
+<button type="button">
+    <a href="/logout">Log out</a>
+</button>
+
+<button type="button">
+    <a href="/cart">To Cart</a>
+    (<span th:text="${cartSize}"></span>)
+</button>
+</body>
+</html>

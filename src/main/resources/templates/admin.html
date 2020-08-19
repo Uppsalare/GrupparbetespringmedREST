@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+    <meta charset="UTF-8">
+    <title>Admin's page</title>
+</head>
+<body>
+<h1> Admin's page </h1>
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Email</th>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Premium</th>
+        <th>Purchase history</th>
+    </tr>
+    <tr th:each="customer:${listOfCustomer}">
+        <td th:text="${customer.email}">Email</td>
+        <td th:text="${customer.firstname}">Firstname</td>
+        <td th:text="${customer.lastname}">Lastname</td>
+        <td th:text="${customer.isPremium()}">Premium</td>
+        <td>
+            <a th:href="@{'/checkuserhistory/'+${customer.id}}">Check user's Purchase history </a>
+        </td>
+
+    </tr>
+
+</table>
+<br>
+<form>
+    <input type="button" value="Go back" onclick="history.back()">
+</form>
+
+</body>
+</html>

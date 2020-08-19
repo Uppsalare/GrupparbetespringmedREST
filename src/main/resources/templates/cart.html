@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+</head>
+<body>
+
+<div th:if="${currentCustomer.isPremium()}">
+    <h3> You are a premium, you will get 15% cheaper</h3>
+    <table border="1" cellpadding="10">
+        <tr>
+            <th>Brand</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Amount</th>
+            <th>Totalprice</th>
+        </tr>
+
+        <tr th:each="disc:${listInCart}">
+            <td th:text="${disc.brand}">Brand</td>
+            <td th:text="${disc.name}">Name</td>
+            <!-- IF -->
+            <div th:if="${disc.price != null}">
+                <td th:text="${disc.price}*0.85">Price</td>
+            </div>
+            <!-- ELSE -->
+            <div th:unless="${disc.price != null}">
+                <td th:text="${disc.price}">Price</td>
+            </div>
+            <td th:text="${disc.quantity}">Amount</td>
+            <td th:text="${disc.price*disc.quantity}*0.85">Totalprice</td>
+        </tr>
+    </table>
+    <br>
+    <!-- IF -->
+    <div th:if="${totalPrice != null}">
+        <h3> Total Price: <span th:text="${totalPrice}*0.85"></span>Kr</h3>
+    </div>
+    <!-- ELSE -->
+    <div th:unless="${totalPrice != null}">
+        <h3> Total Price: <span th:text="${totalPrice}"></span>Kr</h3>
+    </div>
+</div>
+
+<div th:if="${!currentCustomer.isPremium()}">
+    <table border="1" cellpadding="10">
+        <tr>
+            <th>Brand</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Amount</th>
+            <th>Totalprice</th>
+        </tr>
+
+        <tr th:each="disc:${listInCart}">
+            <td th:text="${disc.brand}">Brand</td>
+            <td th:text="${disc.name}">Name</td>
+            <td th:text="${disc.price}">Price</td>
+            <td th:text="${disc.quantity}">Amount</td>
+            <td th:text="${disc.price*disc.quantity}">Totalprice</td>
+        </tr>
+    </table>
+    <br>
+    <h3> Total Price: <span th:text="${totalPrice}"></span>Kr</h3>
+</div>
+
+<button type="button"><a href="/shop">Back to shop</a></button>
+<button type="button"><a href="reset">Reset</a></button>
+<button type="button"><a href="confirm">Confirm</a></button>
+
+</body>
+</html>
